@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry install --with docs
+          poetry install
           
       - name: Generate Documentation
         run: |
