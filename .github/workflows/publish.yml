@@ -1,0 +1,43 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    environment: publish
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install poetry
+        run: pipx install poetry
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+
+      - name: Build lib
+        run: |
+          poetry version ${{ github.event.release.name }}
+          make full_build
+
+      - name: Publish
+        env:
+          TEST_PYPI_APIKEY: ${{ secrets.TEST_PYPI_APIKEY }}
+        run: |
+          poetry config repositories.test-pypi https://test.pypi.org/legacy/
+          poetry config pypi-token.test-pypi ${TEST_PYPI_APIKEY}
+          poetry publish -r test-pypi
+
+          
+     
