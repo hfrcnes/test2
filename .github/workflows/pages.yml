@@ -34,7 +34,7 @@ jobs:
           
       - name: Generate Documentation
         run: |
-          cd docs && pip install -U Sphinx && pip install -r requirements.txt && make html
+          pip install -U Sphinx && make build_docs
           
       - name: Setup Pages
         uses: actions/configure-pages@v5
