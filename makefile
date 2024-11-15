@@ -1,4 +1,4 @@
-POETRY = python3 -m poetry
+POETRY = poetry
 RUN = $(POETRY) run
 
 .PHONY: list
