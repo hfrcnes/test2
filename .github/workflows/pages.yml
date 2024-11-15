@@ -31,10 +31,12 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
+
+      - name: Install Pandoc
+        uses: pandoc/actions/setup@v1
           
       - name: Generate Documentation
         run: |
-          apt-get update && apt-get install -y pandoc
           pip install -U Sphinx && make build_docs
           
       - name: Setup Pages
