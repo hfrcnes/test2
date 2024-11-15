@@ -28,6 +28,7 @@ jobs:
 
       - name: Build lib
         run: |
+          pip install toml
           poetry version ${{ github.event.release.name }}
           make full_build
 
