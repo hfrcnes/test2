@@ -31,13 +31,7 @@ jobs:
           poetry version ${{ github.event.release.name }}
           make full_build
 
-      - name: Publish
-        env:
-          TEST_PYPI_APIKEY: ${{ secrets.TEST_PYPI_APIKEY }}
-        run: |
-          poetry config repositories.test-pypi https://test.pypi.org/legacy/
-          poetry config pypi-token.test-pypi ${TEST_PYPI_APIKEY}
-          poetry publish -r test-pypi
-
-          
-     
+      - name: Publish package distributions to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
